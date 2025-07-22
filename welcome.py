@@ -85,7 +85,7 @@ def drive_slides(slides, *, countdown_seconds):
     import time
 
     KEY_NEXT = b'n'
-    KEY_PREV = b'p'
+    KEY_PREV = b'N'
     KEY_CTRL_C = b'\x03'
 
     end_seconds = int(time.time()) + int(countdown_seconds)
