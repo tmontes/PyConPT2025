@@ -99,26 +99,29 @@ def drive_slides(slides, *, countdown_seconds):
     slide_count = len(slides)
     slide_index = 0
     with tui_gui() as stage:
-        next(slide_action := slides[slide_index](stage))
+        next(slide_run := slides[slide_index](stage))
+        slide_start = True
         show_remaining_time(stage)
         while (input_byte := stage.read_raw(1)) != KEY_CTRL_C:
             show_remaining_time(stage)
             delta = None
-            if input_byte == KEY_NEXT and slide_action:
+            if input_byte == KEY_NEXT and slide_run:
                 try:
-                    next(slide_action)
+                    next(slide_run)
+                    slide_start = False
                 except StopIteration:
-                    slide_action = None
+                    slide_run = None
                 continue
             elif input_byte == KEY_NEXT:
                 delta = 1
             elif input_byte == KEY_PREV:
-                delta = -1 if slide_action else 0
+                delta = -1 if slide_start else 0
             if delta is None:
                 continue
             if 0 <= slide_index + delta < slide_count:
                 slide_index += delta
-                next(slide_action := slides[slide_index](stage))
+                next(slide_run := slides[slide_index](stage))
+                slide_start = True
                 show_remaining_time(stage)
 
 
