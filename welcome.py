@@ -49,7 +49,6 @@ def tui_gui():
 
     def write_raw(b):
         sys.stdout.buffer.raw.write(b)
-        sys.stdout.flush()
 
     def write(t):
         sys.stdout.write(t)
