@@ -1,0 +1,15 @@
+{
+"type": "FeatureCollection",
+"name": "points-of-interest",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "id": 0, "name": "PyConPT 2025", "what": "nova" }, "geometry": { "type": "Point", "coordinates": [ -9.326223428709209, 38.678217692283518 ] } },
+{ "type": "Feature", "properties": { "id": 1, "name": "Santini", "what": "icecream" }, "geometry": { "type": "Point", "coordinates": [ -9.332333627071961, 38.68937319826221 ] } },
+{ "type": "Feature", "properties": { "id": 2, "name": "Santini", "what": "icecream" }, "geometry": { "type": "Point", "coordinates": [ -9.420171605565914, 38.698460955217975 ] } },
+{ "type": "Feature", "properties": { "id": 3, "name": "Cape Roca", "what": "geo" }, "geometry": { "type": "Point", "coordinates": [ -9.500053224794893, 38.781324916828176 ] } },
+{ "type": "Feature", "properties": { "id": 4, "name": "Belém Tower", "what": "history" }, "geometry": { "type": "Point", "coordinates": [ -9.215840738127778, 38.69155114496089 ] } },
+{ "type": "Feature", "properties": { "id": 5, "name": "Jerónimos Monastery", "what": "history" }, "geometry": { "type": "Point", "coordinates": [ -9.206733091269589, 38.697660343346655 ] } },
+{ "type": "Feature", "properties": { "id": 12, "name": "Mesa de Frades", "what": "music" }, "geometry": { "type": "Point", "coordinates": [ -9.126089426548674, 38.713045640751986 ] } },
+{ "type": "Feature", "properties": { "id": 91, "name": "Pastéis de Nata", "what": "tasty" }, "geometry": { "type": "Point", "coordinates": [ -9.203891864814445, 38.697576117265982 ] } }
+]
+}

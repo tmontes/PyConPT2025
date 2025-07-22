@@ -1,0 +1,12 @@
+{
+"type": "FeatureCollection",
+"name": "train-stations",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "fid": 1, "name": "cascais" }, "geometry": { "type": "Point", "coordinates": [ -9.418391339537006, 38.700725977257207 ] } },
+{ "type": "Feature", "properties": { "fid": 2, "name": "estoril" }, "geometry": { "type": "Point", "coordinates": [ -9.398559636402668, 38.703305245005893 ] } },
+{ "type": "Feature", "properties": { "fid": 3, "name": "carcavelos" }, "geometry": { "type": "Point", "coordinates": [ -9.337292869273567, 38.68778663711371 ] } },
+{ "type": "Feature", "properties": { "fid": 4, "name": "belém" }, "geometry": { "type": "Point", "coordinates": [ -9.198447424590329, 38.696156104561055 ] } },
+{ "type": "Feature", "properties": { "fid": 5, "name": "cais do sodré" }, "geometry": { "type": "Point", "coordinates": [ -9.145242829671243, 38.705950939826934 ] } }
+]
+}
