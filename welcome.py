@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 
+# 48x14 terminal?
+
 import contextlib
 
 
