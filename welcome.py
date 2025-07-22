@@ -138,9 +138,20 @@ def clean_slate(slide_painter):
 
 @clean_slate
 def paint_slide(stage, n):
+    from random import randint
     stage.write(f'slide #{n}')
     yield
-    stage.canvas.create_line(100*n, 100*n, 600, 300+100*n, width=8)
+    w = stage.canvas.winfo_width()
+    h = stage.canvas.winfo_height()
+    for _ in range(42):
+        stage.canvas.create_line(
+            randint(0, w),
+            randint(0, h),
+            randint(0, w),
+            randint(0, h),
+            width=8,
+            fill=f'#20{randint(64, 192):02x}{randint(128, 255):02x}',
+        )
     stage.canvas.update()
     yield
     stage.write('\r\n\nsopa de cebola')
