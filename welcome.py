@@ -7,7 +7,7 @@ def create_canvas():
     import tkinter
 
     PAD_L = PAD_R = PAD_B = 32
-    PAD_T = 500
+    PAD_T = 128
 
     window = tkinter.Tk()
     window.overrideredirect(True)
