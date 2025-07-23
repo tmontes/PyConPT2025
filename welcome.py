@@ -319,10 +319,41 @@ def icecream(stage):
     stage.write_at(5, 14, "5m walk", fg=250)
 
 
+def draw_seaside_walk(stage, *, transform):
+    filepath = THIS_DIR / 'gis' / 'lines-of-interest.geojson'
+    names = {'paredão'}
+    object_ids = draw_lines(stage, filepath, names=names, width=12, fill='#ff8000', transform=transform)
+    for object_id in object_ids:
+        stage.canvas.lower(object_id)
+    stage.canvas.update()
+
+
+@clean_slate
+def seaside_walk_run(stage):
+    transform = T(scale=8.5, dx=-1400, dy=-2200)
+    draw_coastline(stage, transform=transform)
+    draw_trainline(stage, transform=transform)
+    draw_trainstations(stage, stations={'cascais', 'estoril'}, transform=transform)
+    draw_pyconpt2025(stage, transform=transform)
+    stage.write_at(46, 11, "10m train", fg=250)
+    stage.write_at(44, 12, "from Carcavelos", fg=250)
+    yield
+    slide_title(stage, "seaside walk/run 🏃‍")
+    yield
+    draw_seaside_walk(stage, transform=transform)
+    yield
+    stage.write("  🌊 Beautiful ocean view\r\n")
+    stage.write("  📏 2-3km Estoril↔︎Cascais\r\n")
+    yield
+    stage.write("  🌈 Early morning or late afternoon is best\r\n")
+    stage.write("     (too hot, too busy during daytime)\r\n")
+    stage.write("  ⏰ 1-2 hours walking\r\n")
+    
 
 SLIDES = (
     hello,
     icecream,
+    seaside_walk_run,
 )
 
 if __name__ == '__main__':
