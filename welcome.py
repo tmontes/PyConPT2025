@@ -3,6 +3,8 @@
 # 48x14 terminal?
 
 import contextlib
+import dataclasses
+import json
 
 
 def create_canvas():
@@ -136,30 +138,72 @@ def clean_slate(slide_painter):
     return wrapper
 
 
-@clean_slate
-def paint_slide(stage, n):
-    from random import randint
-    stage.write(f'slide #{n}')
-    yield
-    w = stage.canvas.winfo_width()
-    h = stage.canvas.winfo_height()
-    for _ in range(42):
-        stage.canvas.create_line(
-            randint(0, w),
-            randint(0, h),
-            randint(0, w),
-            randint(0, h),
-            width=8,
-            fill=f'#20{randint(64, 192):02x}{randint(128, 255):02x}',
-        )
-    stage.canvas.update()
-    yield
-    stage.write('\r\n\nsopa de cebola')
+@dataclasses.dataclass
+class T:
+    scale: float
+    dx: int
+    dy: int
 
+
+def draw_lines(stage, filename, names, *, width=4, fill='#000000', transform=None):
+    transform = T(scale=1.0, dx=0, dy=0) if transform is None else transform
+    with open(filename, 'rt') as f:
+        data = json.load(f)
+    object_ids = []
+    for feature in data['features']:
+        if names and feature['properties']['name'] not in names:
+            continue
+        canvas_coords = (
+            (
+                ((x + 9.48) * transform.scale * 3000) + 50 + transform.dx,
+                ((38.8 - y) * transform.scale * 3000) + 200 + transform.dy
+            )
+            for x, y in feature['geometry']['coordinates']
+        )
+        object_id = stage.canvas.create_line(*canvas_coords, width=width, fill=fill)
+        object_ids.append(object_id)
+    stage.canvas.update()
+    return object_ids
+
+
+def draw_coastline(stage, *, transform=None):
+    filename = 'gis/coastline.geojson'
+    names = {'norte', 'sul'}
+    fill = '#00a0ff'
+    return draw_lines(stage, filename, names, fill=fill, transform=transform)
+
+
+def draw_trainline(stage, *, transform=None):
+    filename = 'gis/trainline.geojson'
+    names = None
+    width = 8
+    fill = '#000000'
+    return draw_lines(stage, filename, names, width=width, fill=fill, transform=transform)
+
+
+
+BOLD = '\033[1m'
+NORMAL = '\033[0m'
+
+@clean_slate
+def hello(stage):
+    stage.write("\n")
+    stage.write(f"  {BOLD}local self{NORMAL}\r\n")
+    stage.write("  ----------\r\n")
+    yield
+    stage.write("  🙋  I'm Tiago️\r\n")
+    yield
+    stage.write("  📍  Living here since forever\r\n")
+    yield
+    stage.write("  🗺   Unique tips for exploring the area\r\n")
+    yield
+    draw_coastline(stage)
+    yield
+    draw_trainline(stage)
+    yield
 
 SLIDES = (
-    lambda stage: paint_slide(stage, 1),
-    lambda stage: paint_slide(stage, 2),
+    hello,
 )
 
 if __name__ == '__main__':
