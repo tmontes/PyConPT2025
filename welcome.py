@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-# 48x14 terminal?
+# Hardcoded for a 62x18 TTY
 
 import contextlib
 import dataclasses
