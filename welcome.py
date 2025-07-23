@@ -276,7 +276,7 @@ def draw_santini(stage, *, transform):
     names = {'Santini'}
     draw_points(stage, filepath, names=names, fill='yellow', transform=transform)
     filepath = THIS_DIR / 'gis' / 'lines-of-interest.geojson'
-    names = {'nova-santini'}
+    names = {'santini'}
     object_ids = draw_lines(stage, filepath, names=names, fill='#ff8000', transform=transform)
     for object_id in object_ids:
         stage.canvas.lower(object_id)
@@ -306,6 +306,18 @@ def icecream(stage):
     yield
     stage.write("  ⁉️  Still the 2nd best in the world?\r\n")
     stage.write_at(26, 14, "15-20m walk", fg=250)
+    yield
+    stage.write_at(26, 14, "           ")
+    stage.canvas.delete("all")
+    transform = T(scale=7.7, dx=-1200, dy=-2000)
+    draw_coastline(stage, transform=transform)
+    draw_trainline(stage, transform=transform)
+    draw_trainstations(stage, stations={'cascais'}, transform=transform)
+    draw_santini(stage, transform=transform)
+    stage.canvas.update()
+    stage.write_at(46, 12, "10-15m train", fg=250)
+    stage.write_at(5, 14, "5m walk", fg=250)
+
 
 
 SLIDES = (
