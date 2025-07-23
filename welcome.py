@@ -350,10 +350,56 @@ def seaside_walk_run(stage):
     stage.write("  ⏰ 1-2 hours walking\r\n")
     
 
+def draw_cape_roca(stage, *, transform):
+    filepath = THIS_DIR / 'gis' / 'points-of-interest.geojson'
+    names = {'Cape Roca'}
+    draw_points(stage, filepath, names=names, fill='yellow', transform=transform)
+    filepath = THIS_DIR / 'gis' / 'lines-of-interest.geojson'
+    names = {'roca'}
+    object_ids = draw_lines(stage, filepath, names=names, fill='#ff8000', transform=transform)
+    for object_id in object_ids:
+        stage.canvas.lower(object_id)
+    stage.canvas.update()
+
+
+@clean_slate
+def nature(stage):
+    transform = T(scale=1.6, dx=700, dy=-150)
+    draw_coastline(stage, transform=transform)
+    draw_trainline(stage, transform=transform)
+    draw_trainstations(stage, stations={'cascais'}, transform=transform)
+    draw_pyconpt2025(stage, transform=transform)
+    stage.write_at(57, 11, "10-15m", fg=250)
+    stage.write_at(53, 12, "train from", fg=250)
+    stage.write_at(53, 13, "Carcavelos", fg=250)
+    yield
+    slide_title(stage, "nature and geography 🌿")
+    yield
+    draw_cape_roca(stage, transform=transform)
+    stage.write_at(26, 2, ' @ Cape Roca')
+    stage.write_at(25, 3, '⎺⎺⎺⎺⎺⎺⎺⎺⎺⎺⎺⎺⎺')
+    yield
+    stage.write("\r\n")
+    stage.write("  🗺️  Most western point\r\n")
+    stage.write("     in continental Europe\r\n\r\n")
+    yield
+    stage.write("  🌍 Geo-bragging rights\r\n\r\n")
+    yield
+    stage.write("  ⛰️  Amazing nature views\r\n\r\n")
+    yield
+    stage.write("  🌈 Mornings tend to be less busy\r\n")
+    stage.write("     (but sunsets are lovely!)\r\n\r\n")
+    yield
+    stage.write("  ⏰ No less than 1/2 a day\r\n\r\n")
+    yield
+    stage.write_at(44, 6, "45-60m bus", fg=250)
+    stage.write_at(44, 7, "from Cascais", fg=250)
+
 SLIDES = (
     hello,
     icecream,
     seaside_walk_run,
+    nature,
 )
 
 if __name__ == '__main__':
