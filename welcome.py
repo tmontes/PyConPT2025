@@ -148,6 +148,12 @@ class T:
     dx: int
     dy: int
 
+    def x(self, x):
+        return ((x + 9.48) * self.scale * 3000) + 50 + self.dx
+
+    def y(self, y):
+        return ((38.8 - y) * self.scale * 3000) + 200 + self.dy
+
 
 def draw_lines(stage, filepath, *, names=None, width=4, fill='#000000', transform=None):
     transform = T(scale=1.0, dx=0, dy=0) if transform is None else transform
@@ -158,11 +164,8 @@ def draw_lines(stage, filepath, *, names=None, width=4, fill='#000000', transfor
         if names and feature['properties']['name'] not in names:
             continue
         canvas_coords = (
-            (
-                ((x + 9.48) * transform.scale * 3000) + 50 + transform.dx,
-                ((38.8 - y) * transform.scale * 3000) + 200 + transform.dy
-            )
-            for x, y in feature['geometry']['coordinates']
+            (transform.x(lon), transform.y(lat))
+            for lon, lat in feature['geometry']['coordinates']
         )
         object_id = stage.canvas.create_line(*canvas_coords, width=width, fill=fill)
         object_ids.append(object_id)
@@ -179,9 +182,9 @@ def draw_points(stage, filepath, names, *, radius=16, width=4, fill='#000000', t
         name = feature['properties']['name']
         if names and name not in names:
             continue
-        x, y = feature['geometry']['coordinates']
-        canvas_x = ((x + 9.48) * transform.scale * 3000) + 50 + transform.dx
-        canvas_y = ((38.8 - y) * transform.scale * 3000) + 200 + transform.dy
+        lon, lat = feature['geometry']['coordinates']
+        canvas_x = transform.x(lon)
+        canvas_y = transform.y(lat)
         canvas_coords = (canvas_x - radius, canvas_y - radius, canvas_x + radius, canvas_y + radius)
         object_id = stage.canvas.create_oval(*canvas_coords, width=width, fill=fill)
         stage.canvas.create_text(canvas_x, canvas_y + radius * 1.5, text=name)
