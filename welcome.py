@@ -314,7 +314,8 @@ def icecream(stage):
     draw_trainstations(stage, stations={'cascais'}, transform=transform)
     draw_santini(stage, transform=transform)
     stage.canvas.update()
-    stage.write_at(46, 12, "10-15m train", fg=250)
+    stage.write_at(43, 11, "10-15m train", fg=250)
+    stage.write_at(42, 12, "from Carcavelos", fg=250)
     stage.write_at(5, 14, "5m walk", fg=250)
 
 
