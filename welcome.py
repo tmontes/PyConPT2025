@@ -145,7 +145,7 @@ class T:
     dy: int
 
 
-def draw_lines(stage, filename, names, *, width=4, fill='#000000', transform=None):
+def draw_lines(stage, filename, *, names=None, width=4, fill='#000000', transform=None):
     transform = T(scale=1.0, dx=0, dy=0) if transform is None else transform
     with open(filename, 'rt') as f:
         data = json.load(f)
@@ -166,20 +166,43 @@ def draw_lines(stage, filename, names, *, width=4, fill='#000000', transform=Non
     return object_ids
 
 
+def draw_points(stage, filename, names, *, radius=16, width=4, fill='#000000', transform=None):
+    transform = T(scale=1.0, dx=0, dy=0) if transform is None else transform
+    with open(filename, 'rt') as f:
+        data = json.load(f)
+    object_ids = []
+    for feature in data['features']:
+        name = feature['properties']['name']
+        if names and name not in names:
+            continue
+        x, y = feature['geometry']['coordinates']
+        canvas_x = ((x + 9.48) * transform.scale * 3000) + 50 + transform.dx
+        canvas_y = ((38.8 - y) * transform.scale * 3000) + 200 + transform.dy
+        canvas_coords = (canvas_x - radius, canvas_y - radius, canvas_x + radius, canvas_y + radius)
+        object_id = stage.canvas.create_oval(*canvas_coords, width=width, fill=fill)
+        stage.canvas.create_text(canvas_x, canvas_y + radius * 1.5, text=name)
+        object_ids.append(object_id)
+    stage.canvas.update()
+    return object_ids
+
+
 def draw_coastline(stage, *, transform=None):
     filename = 'gis/coastline.geojson'
     names = {'norte', 'sul'}
-    fill = '#00a0ff'
-    return draw_lines(stage, filename, names, fill=fill, transform=transform)
+    fill = '#00d0ff'
+    return draw_lines(stage, filename, names=names, fill=fill, transform=transform)
 
 
 def draw_trainline(stage, *, transform=None):
     filename = 'gis/trainline.geojson'
-    names = None
     width = 8
     fill = '#000000'
-    return draw_lines(stage, filename, names, width=width, fill=fill, transform=transform)
+    draw_lines(stage, filename, width=width, fill=fill, transform=transform)
 
+def draw_trainstations(stage, *, stations=None, transform=None):
+    filename = 'gis/train-stations.geojson'
+    fill = '#c0c0c0'
+    draw_points(stage, filename, names=stations, fill=fill)
 
 
 BOLD = '\033[1m'
@@ -200,7 +223,10 @@ def hello(stage):
     draw_coastline(stage)
     yield
     draw_trainline(stage)
+    draw_trainstations(stage, stations={'cascais', 'cais do sodré'})
     yield
+    draw_trainstations(stage, stations={'carcavelos'})
+
 
 SLIDES = (
     hello,
