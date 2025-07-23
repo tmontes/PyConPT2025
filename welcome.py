@@ -4,6 +4,7 @@
 
 import contextlib
 import dataclasses
+import itertools
 import json
 import pathlib
 
@@ -187,10 +188,19 @@ def draw_points(stage, filepath, names, *, radius=16, width=4, fill='#000000', t
         canvas_y = transform.y(lat)
         canvas_coords = (canvas_x - radius, canvas_y - radius, canvas_x + radius, canvas_y + radius)
         object_id = stage.canvas.create_oval(*canvas_coords, width=width, fill=fill)
-        stage.canvas.create_text(canvas_x, canvas_y + radius * 1.5, text=name)
+        draw_text(stage, canvas_x, canvas_y + radius * 1.5, text=name)
         object_ids.append(object_id)
     stage.canvas.update()
     return object_ids
+
+
+TEXT_BG_OFFSETS = list(itertools.product((-1, 0, 1), (-1, 0, 1)))
+TEXT_BG_OFFSETS.remove((0, 0))
+
+def draw_text(stage, x, y, *, bg='white', fg='black', text):
+    for dx, dy in TEXT_BG_OFFSETS:
+        stage.canvas.create_text(x + dx, y + dy, fill=bg, text=text)
+    stage.canvas.create_text(x, y, fill=fg, text=text)
 
 
 def draw_coastline(stage, *, transform=None):
