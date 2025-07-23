@@ -144,9 +144,9 @@ def clean_slate(slide_painter):
 
 @dataclasses.dataclass
 class T:
-    scale: float
-    dx: int
-    dy: int
+    scale: float = 1.0
+    dx: int = 0
+    dy: int = 0
 
     def x(self, x):
         return ((x + 9.48) * self.scale * 3000) + 50 + self.dx
@@ -210,7 +210,7 @@ def draw_trainline(stage, *, transform=None):
 def draw_trainstations(stage, *, stations=None, transform=None):
     filepath = THIS_DIR / 'gis' / 'train-stations.geojson'
     fill = '#c0c0c0'
-    draw_points(stage, filepath, names=stations, fill=fill)
+    draw_points(stage, filepath, names=stations, fill=fill, transform=transform)
 
 
 def draw_pyconpt2025(stage, *, transform=None):
@@ -227,9 +227,9 @@ def draw_pyconpt2025(stage, *, transform=None):
     canvas_x = transform.x(lon)
     canvas_y = transform.y(lat)
     blue = [(canvas_x + x, canvas_y + y) for x, y in logo['blue']]
-    stage.canvas.create_polygon(blue, fill='#306998')
+    stage.canvas.create_polygon(blue, fill='#306998', outline='black')
     yellow = [(canvas_x + x, canvas_y + y) for x, y in logo['yellow']]
-    stage.canvas.create_polygon(yellow, fill='#ffd43b')
+    stage.canvas.create_polygon(yellow, fill='#ffd43b', outline='black')
     stage.canvas.update()
 
 
@@ -238,6 +238,7 @@ NORMAL = '\033[0m'
 
 @clean_slate
 def hello(stage):
+    transform = T()
     stage.write("\n")
     stage.write(f"  {BOLD}local self{NORMAL}\r\n")
     stage.write("  ----------\r\n")
@@ -248,13 +249,14 @@ def hello(stage):
     yield
     stage.write("  🗺   Unique tips for exploring the area\r\n")
     yield
-    draw_coastline(stage)
+    draw_coastline(stage, transform=transform)
     yield
-    draw_trainline(stage)
-    draw_trainstations(stage, stations={'cascais', 'cais do sodré'})
+    draw_trainline(stage, transform=transform)
+    draw_trainstations(stage, stations={'cascais', 'cais do sodré'}, transform=transform)
     yield
-    draw_trainstations(stage, stations={'carcavelos'})
-    draw_pyconpt2025(stage)
+    draw_pyconpt2025(stage, transform=transform)
+    yield
+    draw_trainstations(stage, stations={'carcavelos'}, transform=transform)
 
 
 SLIDES = (
