@@ -256,7 +256,6 @@ def hello(stage):
     slide_title(stage, "local self")
     yield
     stage.write("  🙋  I'm Tiago️\r\n")
-    yield
     stage.write("  📍  Living here since forever\r\n")
     yield
     stage.write("  🗺   Unique tips for exploring the area\r\n")
@@ -300,12 +299,12 @@ def icecream(stage):
     draw_santini(stage, transform=transform)
     stage.write_at(14, 2, ' @ Santini')
     stage.write_at(13, 3, '⎺⎺⎺⎺⎺⎺⎺⎺⎺⎺⎺')
+    stage.write_at(26, 14, "15-20m walk", fg=250)
     yield
     stage.write("  🍓 Fruit flavours are the best\r\n")
     stage.write("     (strawberry, hazelnut, mango, melon, ...)\r\n")
     yield
-    stage.write("  ⁉️  Still the 2nd best in the world?\r\n")
-    stage.write_at(26, 14, "15-20m walk", fg=250)
+    stage.write("  ⁉️  Still the 2nd best in the world\r\n")
     yield
     stage.write_at(26, 14, "           ")
     stage.canvas.delete("all")
@@ -321,7 +320,7 @@ def icecream(stage):
 
 
 SLIDES = (
-    # hello,
+    hello,
     icecream,
 )
 
