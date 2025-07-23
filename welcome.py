@@ -174,7 +174,7 @@ def draw_lines(stage, filepath, *, names=None, width=4, fill='#000000', transfor
     return object_ids
 
 
-def draw_points(stage, filepath, names, *, radius=16, width=4, fill='#000000', transform=None):
+def draw_points(stage, filepath, names=None, *, radius=16, width=4, fill='#000000', transform=None):
     transform = T(scale=1.0, dx=0, dy=0) if transform is None else transform
     with open(filepath, 'rt') as f:
         data = json.load(f)
@@ -243,12 +243,12 @@ def draw_pyconpt2025(stage, *, transform=None):
     stage.canvas.update()
 
 
-
 def slide_title(stage, title_text):
     BOLD = '\033[1m'
     NORMAL = '\033[0m'
     underline = '⎺' * len(title_text)
     stage.write(f"\n  {BOLD}{title_text}{NORMAL}\r\n  {underline}\r\n")
+
 
 @clean_slate
 def hello(stage):
@@ -271,8 +271,22 @@ def hello(stage):
     draw_trainstations(stage, stations={'carcavelos'}, transform=transform)
 
 
+@clean_slate
+def icecream(stage):
+    transform = T(scale=7.7, dx=-3000, dy=-2400)
+    draw_coastline(stage, transform=transform)
+    draw_trainline(stage, transform=transform)
+    draw_trainstations(stage, stations={'carcavelos'}, transform=transform)
+    draw_pyconpt2025(stage, transform=transform)
+    yield
+    slide_title(stage, "icecream")
+    yield
+    draw_points(stage, THIS_DIR / 'gis' / 'points-of-interest.geojson', names={'Santini'}, fill='yellow', transform=transform)
+
+
 SLIDES = (
     hello,
+    icecream,
 )
 
 if __name__ == '__main__':
