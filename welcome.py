@@ -435,12 +435,48 @@ def history(stage):
     draw_pasteis_belem(stage, transform=transform)
 
 
+def draw_fado(stage, *, transform):
+    filepath = THIS_DIR / 'gis' / 'points-of-interest.geojson'
+    names = {'Mesa de Frades'}
+    draw_points(stage, filepath, names=names, fill='yellow', transform=transform)
+    filepath = THIS_DIR / 'gis' / 'lines-of-interest.geojson'
+    names = {'fado'}
+    object_ids = draw_lines(stage, filepath, names=names, fill='#ff8000', transform=transform)
+    for object_id in object_ids:
+        stage.canvas.lower(object_id)
+    stage.canvas.update()
+
+
+@clean_slate
+def music(stage):
+    slide_title(stage, "music 🎶")
+    yield
+    transform = T(scale=7.5, dx=-7000, dy=-1800)
+    draw_coastline(stage, transform=transform)
+    draw_trainline(stage, transform=transform)
+    draw_trainstations(stage, stations={'cais do sodré'}, transform=transform)
+    stage.write_at(18, 17, "20m train from Carcavelos", fg=250)
+    yield
+    stage.write("  💃 Fado is a traditional music style\r\n")
+    stage.write("  🪕 One singer + two acoustic string instruments\r\n\r\n")
+    yield
+    stage.write('  ⛪️ "Mesa de Frades" is a very nice place\r\n\r\n')
+    draw_fado(stage, transform=transform)
+    stage.write_at(50, 9, "30m walk", fg=250)
+    yield
+    stage.write('  🍽️  Needs reservation and is expensive(ish)\r\n')
+    stage.write('  🍻 Drinks after dinner is cool: post 22h\r\n\r\n')
+    yield
+    stage.write("  🙋 I'm going this Saturday: wanna join?")
+
+
 SLIDES = (
     hello,
     icecream,
     seaside_walk_run,
     nature,
     history,
+    music,
 )
 
 if __name__ == '__main__':
