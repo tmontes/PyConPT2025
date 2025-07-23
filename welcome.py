@@ -243,15 +243,17 @@ def draw_pyconpt2025(stage, *, transform=None):
     stage.canvas.update()
 
 
-BOLD = '\033[1m'
-NORMAL = '\033[0m'
+
+def slide_title(stage, title_text):
+    BOLD = '\033[1m'
+    NORMAL = '\033[0m'
+    underline = '⎺' * len(title_text)
+    stage.write(f"\n  {BOLD}{title_text}{NORMAL}\r\n  {underline}\r\n")
 
 @clean_slate
 def hello(stage):
     transform = T()
-    stage.write("\n")
-    stage.write(f"  {BOLD}local self{NORMAL}\r\n")
-    stage.write("  ----------\r\n")
+    slide_title(stage, "local self")
     yield
     stage.write("  🙋  I'm Tiago️\r\n")
     yield
