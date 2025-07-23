@@ -470,6 +470,20 @@ def music(stage):
     stage.write("  🙋 I'm going this Saturday: wanna join?")
 
 
+@clean_slate
+def thanks(stage):
+    slide_title(stage, "thanks 🙏")
+    yield
+    stage.write('\r\n\r\n')
+    stage.write('  🗣️  Come talk to me for more\r\n\r\n')
+    yield
+    stage.write('  🛜 BlueSky @setnomt.bsky.social\r\n\r\n')
+    yield
+    stage.write('  🐍 https://github.com/tmontes/PyConPT2025\r\n')
+    stage.write_at(6, 11, 'disclamer: might be interesting + works on my machine', fg=246)
+    yield
+
+
 SLIDES = (
     hello,
     icecream,
@@ -477,9 +491,9 @@ SLIDES = (
     nature,
     history,
     music,
+    thanks,
 )
 
 if __name__ == '__main__':
 
     drive_slides(SLIDES, countdown_seconds=5*60)
-
