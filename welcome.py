@@ -213,15 +213,23 @@ def draw_trainstations(stage, *, stations=None, transform=None):
     draw_points(stage, filepath, names=stations, fill=fill)
 
 
-def draw_pyconpt2025(stage):
-    scale = 1.5
-    offset_x, offset_y = 260, 260
-
+def draw_pyconpt2025(stage, *, transform=None):
+    transform = T(scale=1.0, dx=0, dy=0) if transform is None else transform
+    with open(THIS_DIR / 'gis' / 'points-of-interest.geojson', 'rt') as f:
+        points = json.load(f)
     with open(THIS_DIR / 'images' / 'python-logo.json', 'rt') as f:
-        data = json.load(f)
-
-    stage.canvas.create_polygon(data['blue'], fill='#306998')
-    stage.canvas.create_polygon(data['yellow'], fill='#ffd43b')
+        logo = json.load(f)
+    lon, lat = [
+        x['geometry']['coordinates']
+        for x in points['features'] 
+        if x['properties']['name'] == 'PyConPT 2025'
+    ][0]
+    canvas_x = transform.x(lon)
+    canvas_y = transform.y(lat)
+    blue = [(canvas_x + x, canvas_y + y) for x, y in logo['blue']]
+    stage.canvas.create_polygon(blue, fill='#306998')
+    yellow = [(canvas_x + x, canvas_y + y) for x, y in logo['yellow']]
+    stage.canvas.create_polygon(yellow, fill='#ffd43b')
     stage.canvas.update()
 
 
