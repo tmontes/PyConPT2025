@@ -5,6 +5,10 @@
 import contextlib
 import dataclasses
 import json
+import pathlib
+
+
+THIS_DIR = pathlib.Path(__file__).parent
 
 
 def create_canvas():
@@ -145,9 +149,9 @@ class T:
     dy: int
 
 
-def draw_lines(stage, filename, *, names=None, width=4, fill='#000000', transform=None):
+def draw_lines(stage, filepath, *, names=None, width=4, fill='#000000', transform=None):
     transform = T(scale=1.0, dx=0, dy=0) if transform is None else transform
-    with open(filename, 'rt') as f:
+    with open(filepath, 'rt') as f:
         data = json.load(f)
     object_ids = []
     for feature in data['features']:
@@ -166,9 +170,9 @@ def draw_lines(stage, filename, *, names=None, width=4, fill='#000000', transfor
     return object_ids
 
 
-def draw_points(stage, filename, names, *, radius=16, width=4, fill='#000000', transform=None):
+def draw_points(stage, filepath, names, *, radius=16, width=4, fill='#000000', transform=None):
     transform = T(scale=1.0, dx=0, dy=0) if transform is None else transform
-    with open(filename, 'rt') as f:
+    with open(filepath, 'rt') as f:
         data = json.load(f)
     object_ids = []
     for feature in data['features']:
@@ -187,22 +191,22 @@ def draw_points(stage, filename, names, *, radius=16, width=4, fill='#000000', t
 
 
 def draw_coastline(stage, *, transform=None):
-    filename = 'gis/coastline.geojson'
+    filepath = THIS_DIR / 'gis' / 'coastline.geojson'
     names = {'norte', 'sul'}
     fill = '#00d0ff'
-    return draw_lines(stage, filename, names=names, fill=fill, transform=transform)
+    return draw_lines(stage, filepath, names=names, fill=fill, transform=transform)
 
 
 def draw_trainline(stage, *, transform=None):
-    filename = 'gis/trainline.geojson'
+    filepath = THIS_DIR / 'gis' / 'trainline.geojson'
     width = 8
     fill = '#000000'
-    draw_lines(stage, filename, width=width, fill=fill, transform=transform)
+    draw_lines(stage, filepath, width=width, fill=fill, transform=transform)
 
 def draw_trainstations(stage, *, stations=None, transform=None):
-    filename = 'gis/train-stations.geojson'
+    filepath = THIS_DIR / 'gis' / 'train-stations.geojson'
     fill = '#c0c0c0'
-    draw_points(stage, filename, names=stations, fill=fill)
+    draw_points(stage, filepath, names=stations, fill=fill)
 
 
 BOLD = '\033[1m'
