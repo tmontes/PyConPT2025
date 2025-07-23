@@ -431,6 +431,7 @@ def history(stage):
     stage.write("     (if a bit touristy...)\r\n\r\n")
     yield
     stage.write("  🧁 Try the 'Pastéis de Belém'!\r\n")
+    stage.write("     (AKA Pastéis de Nata)")
     draw_pasteis_belem(stage, transform=transform)
 
 
