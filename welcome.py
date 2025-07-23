@@ -203,10 +203,23 @@ def draw_trainline(stage, *, transform=None):
     fill = '#000000'
     draw_lines(stage, filepath, width=width, fill=fill, transform=transform)
 
+
 def draw_trainstations(stage, *, stations=None, transform=None):
     filepath = THIS_DIR / 'gis' / 'train-stations.geojson'
     fill = '#c0c0c0'
     draw_points(stage, filepath, names=stations, fill=fill)
+
+
+def draw_pyconpt2025(stage):
+    scale = 1.5
+    offset_x, offset_y = 260, 260
+
+    with open(THIS_DIR / 'images' / 'python-logo.json', 'rt') as f:
+        data = json.load(f)
+
+    stage.canvas.create_polygon(data['blue'], fill='#306998')
+    stage.canvas.create_polygon(data['yellow'], fill='#ffd43b')
+    stage.canvas.update()
 
 
 BOLD = '\033[1m'
@@ -230,6 +243,7 @@ def hello(stage):
     draw_trainstations(stage, stations={'cascais', 'cais do sodré'})
     yield
     draw_trainstations(stage, stations={'carcavelos'})
+    draw_pyconpt2025(stage)
 
 
 SLIDES = (
