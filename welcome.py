@@ -271,6 +271,18 @@ def hello(stage):
     draw_trainstations(stage, stations={'carcavelos'}, transform=transform)
 
 
+def draw_santini(stage, *, transform):
+    filepath = THIS_DIR / 'gis' / 'points-of-interest.geojson'
+    names = {'Santini'}
+    draw_points(stage, filepath, names=names, fill='yellow', transform=transform)
+    filepath = THIS_DIR / 'gis' / 'lines-of-interest.geojson'
+    names = {'nova-santini'}
+    object_ids = draw_lines(stage, filepath, names=names, fill='#ff8000', transform=transform)
+    for object_id in object_ids:
+        stage.canvas.lower(object_id)
+    stage.canvas.update()
+
+
 @clean_slate
 def icecream(stage):
     transform = T(scale=7.7, dx=-3000, dy=-2400)
@@ -279,13 +291,25 @@ def icecream(stage):
     draw_trainstations(stage, stations={'carcavelos'}, transform=transform)
     draw_pyconpt2025(stage, transform=transform)
     yield
-    slide_title(stage, "icecream")
+    slide_title(stage, "icecream 🍦")
     yield
-    draw_points(stage, THIS_DIR / 'gis' / 'points-of-interest.geojson', names={'Santini'}, fill='yellow', transform=transform)
+    stage.write("  👶 I'm a client since I was three\r\n")
+    stage.write("  📅 Est. in the 1960's in Estoril (now a franchise)\r\n")
+    stage.write("  👑 Served King Humberto II of Italy\r\n")
+    yield
+    draw_santini(stage, transform=transform)
+    stage.write_at(14, 2, ' @ Santini')
+    stage.write_at(13, 3, '⎺⎺⎺⎺⎺⎺⎺⎺⎺⎺⎺')
+    yield
+    stage.write("  🍓 Fruit flavours are the best\r\n")
+    stage.write("     (strawberry, hazelnut, mango, melon, ...)\r\n")
+    yield
+    stage.write("  ⁉️  Still the 2nd best in the world?\r\n")
+    stage.write_at(26, 14, "15-20m walk", fg=250)
 
 
 SLIDES = (
-    hello,
+    # hello,
     icecream,
 )
 
