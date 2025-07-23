@@ -10,6 +10,6 @@
 { "type": "Feature", "properties": { "id": 4, "name": "Belém Tower", "what": "history" }, "geometry": { "type": "Point", "coordinates": [ -9.215840738127778, 38.69155114496089 ] } },
 { "type": "Feature", "properties": { "id": 5, "name": "Jerónimos Monastery", "what": "history" }, "geometry": { "type": "Point", "coordinates": [ -9.206733091269589, 38.697660343346655 ] } },
 { "type": "Feature", "properties": { "id": 12, "name": "Mesa de Frades", "what": "music" }, "geometry": { "type": "Point", "coordinates": [ -9.126089426548674, 38.713045640751986 ] } },
-{ "type": "Feature", "properties": { "id": 91, "name": "Pastéis de Nata", "what": "tasty" }, "geometry": { "type": "Point", "coordinates": [ -9.203891864814445, 38.697576117265982 ] } }
+{ "type": "Feature", "properties": { "id": 91, "name": "Pastéis de Belém", "what": "tasty" }, "geometry": { "type": "Point", "coordinates": [ -9.203891864814445, 38.697576117265982 ] } }
 ]
 }

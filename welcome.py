@@ -395,11 +395,49 @@ def nature(stage):
     stage.write_at(44, 6, "45-60m bus", fg=250)
     stage.write_at(44, 7, "from Cascais", fg=250)
 
+
+def draw_history(stage, *, transform):
+    filepath = THIS_DIR / 'gis' / 'points-of-interest.geojson'
+    names = {'Belém Tower', 'Jerónimos Monastery'}
+    draw_points(stage, filepath, names=names, fill='yellow', transform=transform)
+
+
+def draw_pasteis_belem(stage, *, transform):
+    filepath = THIS_DIR / 'gis' / 'points-of-interest.geojson'
+    names = {'Pastéis de Belém'}
+    draw_points(stage, filepath, names=names, fill='#ff80ff', transform=transform)
+
+
+@clean_slate
+def history(stage):
+    slide_title(stage, "history 📜")
+    yield
+    transform = T(scale=10.5, dx=-8000, dy=-3000)
+    draw_coastline(stage, transform=transform)
+    draw_trainline(stage, transform=transform)
+    draw_trainstations(stage, stations={'belém'}, transform=transform)
+    stage.write_at(54, 11, "5m train", fg=250)
+    stage.write_at(51, 12, "from Lisbon", fg=250)
+    stage.write_at(34, 17, "15m train", fg=250)
+    stage.write_at(34, 18, "from Carcavelos", fg=250)
+    yield
+    draw_history(stage, transform=transform)
+    yield
+    stage.write("  ⛵️ PT explored the world in the 15th/16h centuries\r\n")
+    yield
+    stage.write("  🗽 The area is full of wonderful monuments\r\n")
+    stage.write("     (if a bit touristy...)\r\n\r\n")
+    yield
+    stage.write("  🧁 Try the 'Pastéis de Belém'!\r\n")
+    draw_pasteis_belem(stage, transform=transform)
+
+
 SLIDES = (
     hello,
     icecream,
     seaside_walk_run,
     nature,
+    history,
 )
 
 if __name__ == '__main__':
