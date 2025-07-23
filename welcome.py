@@ -258,7 +258,9 @@ def hello(stage):
     stage.write("  🙋  I'm Tiago️\r\n")
     stage.write("  📍  Living here since forever\r\n")
     yield
-    stage.write("  🗺   Unique tips for exploring the area\r\n")
+    stage.write("  🗺   Tips for exploring the area\r\n")
+    stage.write_at(13, 2, ' ...tips!')
+    stage.write_at(13, 3, '⎺⎺⎺⎺⎺⎺⎺⎺⎺')
     yield
     draw_coastline(stage, transform=transform)
     yield
