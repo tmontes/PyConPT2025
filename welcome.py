@@ -301,7 +301,7 @@ def icecream(stage):
     draw_santini(stage, transform=transform)
     stage.write_at(14, 2, ' @ Santini')
     stage.write_at(13, 3, '⎺⎺⎺⎺⎺⎺⎺⎺⎺⎺⎺')
-    stage.write_at(26, 14, "15-20m walk", fg=250)
+    stage.write_at(27, 14, "15m walk", fg=250)
     yield
     stage.write("  🍓 Fruit flavours are the best\r\n")
     stage.write("     (strawberry, hazelnut, mango, melon, ...)\r\n")
