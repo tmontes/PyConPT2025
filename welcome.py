@@ -433,6 +433,7 @@ def history(stage):
     stage.write("  🧁 Try the 'Pastéis de Belém'!\r\n")
     stage.write("     (AKA Pastéis de Nata)")
     draw_pasteis_belem(stage, transform=transform)
+    stage.write_at(22, 14, "walking distance", fg=250)
 
 
 def draw_fado(stage, *, transform):
