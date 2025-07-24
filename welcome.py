@@ -394,7 +394,7 @@ def nature(stage):
     yield
     stage.write("  ⏰ No less than 1/2 a day\r\n\r\n")
     yield
-    stage.write_at(44, 6, "45-60m bus", fg=250)
+    stage.write_at(44, 6, "45m bus", fg=250)
     stage.write_at(44, 7, "from Cascais", fg=250)
 
 
